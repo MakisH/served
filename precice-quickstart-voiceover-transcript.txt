@@ -1,0 +1,21 @@
+To couple two simulations, we need a preCICE configuration file.
+This file defines interpolation methods and coupling algorithms.
+For example, preCICE signals when the simulation should end.
+Let's set this to two coupling time windows.
+
+On the left terminal, we have a regular OpenFOAM flow simulation.
+To use preCICE, we only need to enable the preCICE adapter function object in the controlDict,
+and then define what data preCICE reads and writes on which patch, in the preciceDict.
+
+We start the simulation normally, by creating a mesh and starting the pimpleFoam solver.
+OpenFOAM loads the adapter, which calls preCICE, and waits for the other coupling participant to appear.
+
+On the right terminal, we have a simple rigid body motion solver in C++, but many other languages are supported as well.
+The code links to preCICE and directly calls functions from its API.
+Using a force value as input, the code computes a displacement solution.
+preCICE can exchange these values, interpolate them in space and time, and even apply advanced coupling algorithms, such as Anderson acceleration.
+
+With both codes running, the coupling starts.
+After advancing for two time windows, the simulation completes.
+
+Try this Quickstart tutorial today!
